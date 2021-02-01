@@ -13,6 +13,7 @@ if has("patch-8.1.1564")
 else
   set signcolumn=yes
 endif
+let g:mapleader=","
 
 inoremap <silent><expr> <TAB>
       \ pumvisible() ? "\<C-n>" :
@@ -50,6 +51,12 @@ xmap <leader>a  <Plug>(coc-codeaction-selected)
 nmap <leader>a  <Plug>(coc-codeaction-selected)
 " show file explorer
 nmap <space>e :CocCommand explorer<CR>
+" 搜索文件
+nnoremap <silent> <space>f :Files<CR>
+nnoremap <silent> <space>b :Buffers<CR>
+nnoremap <silent> <space>h :History<CR>
+" 展開tag列表
+nnoremap <silent> <space>t :TagbarOpenAutoClose<CR>
 set nu
 set smarttab
 set tabstop=4
@@ -63,12 +70,16 @@ noremap <LEADER>rc :e ~/.config/nvim/init.vim<CR>
 
 call plug#begin('~/.config/nvim/plugged')
 " Use release branch (recommend)
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'junegunn/fzf', {'dir': '~/.fzf','do': './install --all'}
+Plug 'junegunn/fzf.vim' " needed for previews
+Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
+Plug 'antoinemadec/coc-fzf'
 Plug 'ryanoasis/vim-devicons'
 Plug 'luochen1990/rainbow'
 Plug 'jiangmiao/auto-pairs'
 Plug 'skywind3000/asynctasks.vim'
 Plug 'skywind3000/asyncrun.vim'
+Plug 'preservim/tagbar'
 call plug#end()
 
 let g:coc_global_extensions = [
