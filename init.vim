@@ -4,7 +4,24 @@
 "| |  | | | |   | |\  | \ V /  | || |  | |  _ <| |___
 "|_|  |_| |_|   |_| \_|  \_/  |___|_|  |_|_| \_\\____|
 
-set hidden
+" 快捷鍵映射
+" <space>a 對代碼塊執行可選的操作
+" <space>b 顯示當前buffer中的文件列表
+" <space>e 展示當前目錄下的文件列表
+" <space>f 在預設的路徑下使用fzf查找文件
+" <space>h 展示歷史文件列表
+" <space>t 展示當前文件的tag列表
+" <space>- 在代碼語法錯誤之間跳轉 prev
+" <space>= 在代碼語法錯誤之間跳轉 next
+" gd       跳轉到定義
+" gy       跳轉到變量類型的定義
+" gi       跳轉到實現
+" gr       跳轉到引用
+" ctrl-o   插入模式下觸發代碼補全
+" ctrl-o   普通模式下往回跳轉
+
+
+" set hidden
 set updatetime=100
 set shortmess+=c
 if has("patch-8.1.1564")
@@ -13,8 +30,10 @@ if has("patch-8.1.1564")
 else
   set signcolumn=yes
 endif
-let g:mapleader=","
 
+let g:mapleader="\<space>"
+
+" tab補全
 inoremap <silent><expr> <TAB>
       \ pumvisible() ? "\<C-n>" :
       \ <SID>check_back_space() ? "\<TAB>" :
@@ -28,28 +47,24 @@ endfunction
 " format on enter, <cr> could be remapped by other vim plugin
 inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
                               \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
-" trigger coc completion
+" 觸發代碼補全
 inoremap <silent><expr> <c-o> coc#refresh()
-
+" 在代碼的錯誤之間跳轉
 nmap <silent> <LEADER>- <Plug>(coc-diagnostic-prev)
 nmap <silent> <LEADER>= <Plug>(coc-diagnostic-next)
 
-" GoTo code navigation.
+" GoTo code navigation. ctrl-o返回
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 
-" Highlight the symbol and its references when holding the cursor.
+" 對鼠標當前指向的變量或函數名及其引用高亮
 autocmd CursorHold * silent call CocActionAsync('highlight')
-" Formatting selected code.
-xmap <leader>f  <Plug>(coc-format-selected)
-nmap <leader>f  <Plug>(coc-format-selected)
-" Applying codeAction to the selected region.
-" Example: `<leader>aap` for current paragraph
-xmap <leader>a  <Plug>(coc-codeaction-selected)
-nmap <leader>a  <Plug>(coc-codeaction-selected)
-" show file explorer
+" 對選中的區域進行一些操作，比如將選中的代碼塊提取成爲一個單獨的函數
+xmap <space>a  <Plug>(coc-codeaction-selected)
+nmap <space>a  <Plug>(coc-codeaction-selected)
+" 展示文件瀏覽器
 nmap <space>e :CocCommand explorer<CR>
 " 搜索文件
 nnoremap <silent> <space>f :Files<CR>
@@ -57,6 +72,14 @@ nnoremap <silent> <space>b :Buffers<CR>
 nnoremap <silent> <space>h :History<CR>
 " 展開tag列表
 nnoremap <silent> <space>t :TagbarOpenAutoClose<CR>
+" 在任何時候打開init.vim
+noremap <LEADER>rc :e ~/.config/nvim/init.vim<CR>
+" 運行異步任務
+noremap <silent><leader>tr :AsyncTask file-run<cr>
+noremap <silent><leader>tb :AsyncTask file-build<cr>
+noremap <silent><leader>tc :AsyncTask file-configure<cr>
+noremap <silent><leader>te :AsyncTaskEdit<cr>
+
 set nu
 set smarttab
 set tabstop=4
@@ -65,16 +88,12 @@ set expandtab
 set autoindent
 set encoding=UTF-8
 
-" Open the vimrc file anytime
-noremap <LEADER>rc :e ~/.config/nvim/init.vim<CR>
-
 call plug#begin('~/.config/nvim/plugged')
 " Use release branch (recommend)
 Plug 'junegunn/fzf', {'dir': '~/.fzf','do': './install --all'}
 Plug 'junegunn/fzf.vim' " needed for previews
 Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
 Plug 'antoinemadec/coc-fzf'
-Plug 'ryanoasis/vim-devicons'
 Plug 'luochen1990/rainbow'
 Plug 'jiangmiao/auto-pairs'
 Plug 'skywind3000/asynctasks.vim'
