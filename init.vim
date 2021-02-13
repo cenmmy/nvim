@@ -19,17 +19,25 @@
 " gr       跳轉到引用
 " ctrl-o   插入模式下觸發代碼補全
 " ctrl-o   普通模式下往回跳轉
-
+" shift-N  切换到下一个buffer
+" shift-P  切换到上一个buffer
+" shift-B  构建CMake项目
+" shift-C  配置CMake项目
+" shift-E  编辑CMake配置文件
+" shift-R  运行可执行文件
+" shift-X  关闭当前buffer
 
 " set hidden
 set updatetime=100
 set shortmess+=c
-if has("patch-8.1.1564")
-  " Recently vim can merge signcolumn and number column into one
-  set signcolumn=number
-else
-  set signcolumn=yes
-endif
+set nu
+set smarttab
+set ts=4
+set softtabstop=4
+set expandtab
+set autoindent
+set shiftwidth=4
+set encoding=UTF-8
 
 let g:mapleader="\<space>"
 
@@ -75,18 +83,14 @@ nnoremap <silent> <space>t :TagbarOpenAutoClose<CR>
 " 在任何時候打開init.vim
 noremap <LEADER>rc :e ~/.config/nvim/init.vim<CR>
 " 運行異步任務
-noremap <silent><leader>tr :AsyncTask file-run<cr>
-noremap <silent><leader>tb :AsyncTask file-build<cr>
-noremap <silent><leader>tc :AsyncTask file-configure<cr>
-noremap <silent><leader>te :AsyncTaskEdit<cr>
-
-set nu
-set smarttab
-set tabstop=4
-set shiftwidth=4
-set expandtab
-set autoindent
-set encoding=UTF-8
+noremap <silent><S-R> :AsyncTask file-run<cr>
+noremap <silent><S-B> :AsyncTask file-build<cr>
+noremap <silent><S-C> :AsyncTask file-configure<cr>
+noremap <silent><S-E> :AsyncTaskEdit<cr>
+" AirLine 切换 buffer
+nnoremap <S-N> :bn<CR>
+nnoremap <S-P> :bp<CR>
+nnoremap <S-X> :bdelete<CR>
 
 call plug#begin('~/.config/nvim/plugged')
 " Use release branch (recommend)
@@ -99,7 +103,15 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'skywind3000/asynctasks.vim'
 Plug 'skywind3000/asyncrun.vim'
 Plug 'preservim/tagbar'
+Plug 'instant-markdown/vim-instant-markdown', {'for': 'markdown'}
+Plug 'sickill/vim-monokai'
+Plug 'ryanoasis/vim-devicons'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 call plug#end()
+
+syntax enable
+colorscheme monokai
 
 let g:coc_global_extensions = [
         \ 'coc-json', 
@@ -110,3 +122,5 @@ let g:coc_global_extensions = [
 let g:rainbow_active = 1
 let g:asyncrun_open = 10
 let g:asyncrun_rootmarks = ['.git', '.svn', '.root', '.project', '.hg']
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#formatter = 'unique_tail'
