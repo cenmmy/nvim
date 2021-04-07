@@ -1,7 +1,11 @@
 {
     "coc.preferences.extensionUpdateCheck": "daily",
+    "floaterm.completion.enable": true,
+    "floaterm.completion.shortcut": "floaterm",
+    "floaterm.completion.priority": 5,
     "explorer.icon.enableNerdfont": true,
     "explorer.icon.enableVimDevicons": true,
+    "explorer.quitOnOpen": true,
     "suggest.noselect": true,
     "suggest.enablePreselect": false,
     "suggest.completionItemKindLabels": {

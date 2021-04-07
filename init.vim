@@ -11,8 +11,8 @@
 " <space>f 在預設的路徑下使用fzf查找文件
 " <space>h 展示歷史文件列表
 " <space>t 展示當前文件的tag列表
-" <space>- 在代碼語法錯誤之間跳轉 prev
-" <space>= 在代碼語法錯誤之間跳轉 next
+" <space> - 在代碼語法錯誤之間跳轉 prev
+" <space> = 在代碼語法錯誤之間跳轉 next
 " gd       跳轉到定義
 " gy       跳轉到變量類型的定義
 " gi       跳轉到實現
@@ -26,6 +26,11 @@
 " shift-E  编辑CMake配置文件
 " shift-R  运行可执行文件
 " shift-X  关闭当前buffer
+" <F7>     打开终端
+" <F8>     上一个终端
+" <F9>     下一个终端
+" <F10>    关闭当前终端
+" <F12>    在编辑器和终端之间进行切换
 
 " set hidden
 set updatetime=100
@@ -41,7 +46,12 @@ set encoding=UTF-8
 
 let g:mapleader="\<space>"
 
-" tab補全
+" 将所有的json文件看作是jsonc文件，以支持注释
+augroup JsonToJsonc
+    autocmd! FileType json set filetype=jsonc
+augroup END
+
+"tab補全
 inoremap <silent><expr> <TAB>
       \ pumvisible() ? "\<C-n>" :
       \ <SID>check_back_space() ? "\<TAB>" :
@@ -91,6 +101,13 @@ noremap <silent><S-E> :AsyncTaskEdit<cr>
 nnoremap <S-N> :bn<CR>
 nnoremap <S-P> :bp<CR>
 nnoremap <S-X> :bdelete<CR>
+" Floaterm配置
+let g:floaterm_autohide      = 0
+let g:floaterm_keymap_new    = '<F7>'
+let g:floaterm_keymap_prev   = '<F8>'
+let g:floaterm_keymap_next   = '<F9>'
+let g:floaterm_keymap_kill   = '<F10>'
+let g:floaterm_keymap_toggle = '<F12>'
 
 call plug#begin('~/.config/nvim/plugged')
 " Use release branch (recommend)
@@ -108,6 +125,7 @@ Plug 'sickill/vim-monokai'
 Plug 'ryanoasis/vim-devicons'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+Plug 'voldikss/vim-floaterm'
 call plug#end()
 
 syntax enable
@@ -118,7 +136,8 @@ let g:coc_global_extensions = [
         \ 'coc-yaml', 
         \ 'coc-vimlsp', 
         \ 'coc-cmake',
-        \ 'coc-explorer']
+        \ 'coc-explorer',
+        \ 'coc-tsserver']
 let g:rainbow_active = 1
 let g:asyncrun_open = 10
 let g:asyncrun_rootmarks = ['.git', '.svn', '.root', '.project', '.hg']
