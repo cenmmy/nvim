@@ -31,6 +31,9 @@
 " <F9>     下一个终端
 " <F10>    关闭当前终端
 " <F12>    在编辑器和终端之间进行切换
+" <space>ci 单独切换每个行的注释状态 
+" <space>cm 多行注释
+" <space>cu 取消多行注释
 
 " set hidden
 set updatetime=100
@@ -108,6 +111,26 @@ let g:floaterm_keymap_prev   = '<F8>'
 let g:floaterm_keymap_next   = '<F9>'
 let g:floaterm_keymap_kill   = '<F10>'
 let g:floaterm_keymap_toggle = '<F12>'
+" nerdcommenter配置
+" Create default mappings
+let g:NERDCreateDefaultMappings = 1
+" Add spaces after comment delimiters by default
+let g:NERDSpaceDelims = 1
+" Use compact syntax for prettified multi-line comments
+let g:NERDCompactSexyComs = 1
+" Align line-wise comment delimiters flush left instead of following code indentation
+let g:NERDDefaultAlign = 'left'
+" Set a language to use its alternate delimiters by default
+let g:NERDAltDelims_java = 1
+" Add your own custom formats or override the defaults
+let g:NERDCustomDelimiters = { 'c': { 'left': '/**','right': '*/' } }
+" Allow commenting and inverting empty lines (useful when commenting a region)
+let g:NERDCommentEmptyLines = 1
+" Enable trimming of trailing whitespace when uncommenting
+let g:NERDTrimTrailingWhitespace = 1
+" Enable NERDCommenterToggle to check all selected lines is commented or not 
+let g:NERDToggleCheckAllLines = 1
+
 
 call plug#begin('~/.config/nvim/plugged')
 " Use release branch (recommend)
@@ -126,6 +149,7 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'voldikss/vim-floaterm'
+Plug 'preservim/nerdcommenter'
 call plug#end()
 
 syntax enable
@@ -137,7 +161,8 @@ let g:coc_global_extensions = [
         \ 'coc-vimlsp', 
         \ 'coc-cmake',
         \ 'coc-explorer',
-        \ 'coc-tsserver']
+        \ 'coc-tsserver',
+        \ 'coc-java']
 let g:rainbow_active = 1
 let g:asyncrun_open = 10
 let g:asyncrun_rootmarks = ['.git', '.svn', '.root', '.project', '.hg']
