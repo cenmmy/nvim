@@ -150,6 +150,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'voldikss/vim-floaterm'
 Plug 'preservim/nerdcommenter'
+Plug 'puremourning/vimspector'
 call plug#end()
 
 syntax enable
@@ -168,3 +169,30 @@ let g:asyncrun_open = 10
 let g:asyncrun_rootmarks = ['.git', '.svn', '.root', '.project', '.hg']
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#formatter = 'unique_tail'
+
+let g:vimspector_enable_mappings = 'HUMAN'
+
+set cursorline
+highlight CursorLine   cterm=NONE ctermbg=black ctermfg=green guibg=NONE guifg=NONE
+set mouse=a
+
+let g:vimspector_terminal_maxheight = 10
+
+function! s:CustomiseUI()
+  " Close the output window
+  call win_gotoid( g:vimspector_session_windows.output )
+  q
+endfunction
+
+augroup MyVimspectorUICustomistaion
+  autocmd!
+  autocmd User VimspectorUICreated call s:CustomiseUI()
+augroup END
+
+sign define vimspectorBP            text=🔴 texthl=LineNr
+sign define vimspectorBPCond        text=🔵 texthl=WarningMsg
+sign define vimspectorBPDisabled    text=🟠 texthl=LineNr
+sign define vimspectorPC            text=⏩ texthl=LineNr
+sign define vimspectorPCBP          text=⏭  texthl=LineNr
+sign define vimspectorCurrentThread text=▶   texthl=LionNr
+sign define vimspectorCurrentFrame  text=▶   texthl=LionNr
