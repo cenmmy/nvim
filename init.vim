@@ -190,9 +190,9 @@ augroup MyVimspectorUICustomistaion
 augroup END
 
 sign define vimspectorBP            text=🔴 texthl=LineNr
-sign define vimspectorBPCond        text=🔵 texthl=WarningMsg
+sign define vimspectorBPCond        text=🔵 texthl=LineNr
 sign define vimspectorBPDisabled    text=🟠 texthl=LineNr
 sign define vimspectorPC            text=⏩ texthl=LineNr
-sign define vimspectorPCBP          text=⏭  texthl=LineNr
-sign define vimspectorCurrentThread text=▶   texthl=LionNr
-sign define vimspectorCurrentFrame  text=▶   texthl=LionNr
+sign define vimspectorPCBP          text=⏭ texthl=LineNr
+sign define vimspectorCurrentThread text=▶  texthl=LineNr
+sign define vimspectorCurrentFrame  text=▶  texthl=LineNr
